@@ -1,0 +1,29 @@
+<h2>Task Route</h2>
+<div class="row">
+  <div class="col-md-8">
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="project" class="form-label">Project</label>
+        <input type="text" class="form-control" name="project" formControlName="project">
+        <div class="invalid-feedback" *ngIf="!projectForm.get('project').valid&&projectForm.get('project').touched">
+          <span>Укажите корректное имя проекта</span>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" formControlName="email">
+        <div class="invalid-feedback" *ngIf="!projectForm.get('email').valid&&projectForm.get('email').touched">
+          <span *ngIf="projectForm.get('email').errors['required']">Укажите корректный email</span>
+          <span *ngIf="projectForm.get('email').errors['forbiddenEmail']">Запрещенный email</span>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="mail" class="form-label">Project Status</label>
+        <select class="form-select" name="status" aria-label="Select status" formControlName="status">
+          <option [value]="status" *ngFor="let status of statuses">{{ status }}</option>
+        </select>
+      </div>
+      <button class="btn btn-success" type="submit">Submit</button>
+    </form>
+  </div>
+</div>

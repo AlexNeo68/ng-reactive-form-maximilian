@@ -1,0 +1,51 @@
+<h2>Home Route</h2>
+<div class="row">
+  <div class="col-md-8">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <div formGroupName="userData">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" formControlName="username" class="form-control" id="username">
+
+          <div class="invalid-feedback"
+            *ngIf="!signupForm.get('userData.username').valid&&signupForm.get('userData.username').touched">
+            <span *ngIf="signupForm.get('userData.username').errors['required']">Укажите username</span>
+            <span *ngIf="signupForm.get('userData.username').errors['forbiddenName']">Вы используете запрещенное
+              имя</span>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="text" formControlName="email" class="form-control" id="email">
+          <div class="invalid-feedback"
+            *ngIf="!signupForm.get('userData.email').valid&&signupForm.get('userData.email').touched">
+            Укажите корректный email
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="form-check" *ngFor="let gender of genders">
+          <input class="form-check-input" formControlName="gender" [value]="gender" type="radio" name="gender"
+            [id]="gender">
+          <label class="form-check-label" [for]="gender">
+            {{ gender }}
+          </label>
+        </div>
+      </div>
+      <div class="mb-3" formArrayName="hobbies">
+        <h4>Hobbies</h4>
+        <button class="btn btn-warning" type="button" (click)="onAddHobbie()">Add Hobbie</button>
+
+        <div class="mt-3" *ngFor="let hobbyControl of hobbies.controls; let i = index">
+          <input type="text" [formControlName]="i" class="form-control">
+        </div>
+
+      </div>
+      <button class="btn btn-primary" type="submit">Submit</button>
+      <div class="alert alert-danger mt-2" *ngIf="!signupForm.valid&&signupForm.touched">
+        Проверьте форму
+      </div>
+    </form>
+  </div>
+</div>
